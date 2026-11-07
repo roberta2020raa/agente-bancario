@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coffeebank-grain"
+version = "0.1.0"
+description = "Base do assistente de consultas bancárias Grain"
+readme = "README.md"
+requires-python = ">=3.10,<3.15"
+dependencies = [
+    "strands-agents[openai]==1.60.0",
+    "python-dotenv==1.2.1",
+    "pydantic>=2.4,<3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.0.2", "ruff==0.14.14", "mypy==1.19.1"]
+
+[project.scripts]
+grain-check = "grain.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src/grain"]
